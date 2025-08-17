@@ -275,18 +275,17 @@ function initializeImageUpload() {
     }
 }
 
+// Google Form Integration - ACTUAL SUBMISSION TO GOOGLE FORMS
+// We'll submit the form data directly to Google Forms using the formResponse endpoint
+
+// The user's actual Google Form submission URL (this is the endpoint that receives data)
+const GOOGLE_FORM_SUBMIT_URL = 'https://docs.google.com/forms/d/1VeoJ6daMYyjpDsEJTaurWX0gHrfTD5_TtRxlwnPPr2Y/formResponse';
+
 // Form handling
 const joinForm = document.getElementById('joinForm');
 if (joinForm) {
     joinForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        // Validate image upload
-        const fileInput = document.getElementById('profileImage');
-        if (fileInput && fileInput.files.length === 0) {
-            showNotification('Please upload a profile image.', 'error');
-            return;
-        }
         
         // Show loading state
         const submitBtn = this.querySelector('.btn-primary');
@@ -297,34 +296,106 @@ if (joinForm) {
         btnLoading.style.display = 'flex';
         submitBtn.disabled = true;
         
-        // Simulate form submission (replace with actual form handling)
-        setTimeout(() => {
-            // Reset form
-            this.reset();
-            
-            // Reset image preview
-            const imagePreview = document.getElementById('imagePreview');
-            if (imagePreview) {
-                imagePreview.innerHTML = `
-                    <i class="fas fa-user-circle"></i>
-                    <span>No image selected</span>
-                `;
-                imagePreview.classList.remove('has-image');
+        // Collect form data
+        const formData = new FormData(this);
+        
+        // Create a hidden form to submit to Google Forms
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = GOOGLE_FORM_SUBMIT_URL;
+        hiddenForm.target = 'hidden-iframe';
+        hiddenForm.style.display = 'none';
+        
+        // Add all form fields to the hidden form
+        // We'll use the actual field names from your HTML form
+        const fields = {
+            'entry.1375978796': formData.get('entry.1375978796'),        // Full Name
+            'entry.1604746565': formData.get('entry.1604746565'),        // Phone Number
+            'entry.239972610': formData.get('entry.239972610'),          // Branch
+            'entry.1619717035': formData.get('entry.1619717035'),        // Year of Study
+            'entry.1025821786': formData.get('entry.1025821786'),        // Experience
+            'entry.804257283': formData.get('entry.804257283'),          // Motivation
+            'entry.998193003': formData.getAll('entry.998193003')        // Interests (checkboxes)
+        };
+        
+        // Add each field to the hidden form
+        Object.keys(fields).forEach(fieldId => {
+            if (fields[fieldId]) {
+                if (Array.isArray(fields[fieldId])) {
+                    // Handle checkboxes (multiple values)
+                    fields[fieldId].forEach(value => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = fieldId;
+                        input.value = value;
+                        hiddenForm.appendChild(input);
+                    });
+                } else {
+                    // Handle single value fields
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = fieldId;
+                    input.value = fields[fieldId];
+                    hiddenForm.appendChild(input);
+                }
             }
+        });
+        
+        // Create hidden iframe to receive the response
+        const hiddenIframe = document.createElement('iframe');
+        hiddenIframe.name = 'hidden-iframe';
+        hiddenIframe.style.display = 'none';
+        document.body.appendChild(hiddenIframe);
+        
+        // Add the hidden form to the page
+        document.body.appendChild(hiddenForm);
+        
+        // Submit the form
+        try {
+            hiddenForm.submit();
+            console.log('Form submitted to Google Forms successfully!');
             
-            const removeBtn = document.getElementById('removeImage');
-            if (removeBtn) {
-                removeBtn.style.display = 'none';
-            }
+            // Show success message and thank you card
+            setTimeout(() => {
+                // Clean up hidden elements
+                document.body.removeChild(hiddenForm);
+                document.body.removeChild(hiddenIframe);
+                
+                // Hide the form and show thank you card
+                const formContainer = document.querySelector('.join-form');
+                const thankYouCard = document.getElementById('thankYouCard');
+                
+                if (formContainer && thankYouCard) {
+                    formContainer.style.display = 'none';
+                    thankYouCard.style.display = 'block';
+                    thankYouCard.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Reset button state
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                submitBtn.disabled = false;
+                
+                // Show success notification
+                showNotification('Application submitted successfully! Check your Google Form responses.', 'success');
+                
+            }, 2000);
             
-            // Show success message
-            showNotification('Application submitted successfully! We\'ll get back to you soon.', 'success');
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            
+            // Clean up on error
+            if (hiddenForm.parentNode) document.body.removeChild(hiddenForm);
+            if (hiddenIframe.parentNode) document.body.removeChild(hiddenIframe);
             
             // Reset button state
             btnText.style.display = 'inline';
             btnLoading.style.display = 'none';
             submitBtn.disabled = false;
-        }, 2000);
+            
+            // Show error notification
+            showNotification('Error submitting form. Please try again.', 'error');
+        }
     });
 }
 

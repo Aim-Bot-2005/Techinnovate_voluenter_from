@@ -1068,6 +1068,32 @@ section {
         font-size: 0.8rem;
     }
     
+    .thank-you-card {
+        padding: 30px 20px;
+    }
+    
+    .thank-you-title {
+        font-size: 2rem;
+    }
+    
+    .success-icon {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .success-icon i {
+        font-size: 2.5rem;
+    }
+    
+    .whatsapp-section {
+        padding: 20px;
+    }
+    
+    .whatsapp-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
     .section-header {
         margin-bottom: 30px;
     }
@@ -1308,6 +1334,114 @@ section {
     text-align: center;
     margin: 0;
     font-style: italic;
+}
+
+/* Thank You Card Styles */
+.thank-you-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: slideInUp 0.8s ease-out;
+    text-align: center;
+}
+
+.thank-you-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.success-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, #00ff88, #00cc6a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    animation: success-bounce 0.6s ease-out;
+}
+
+.success-icon i {
+    font-size: 3rem;
+    color: #000000;
+}
+
+@keyframes success-bounce {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.thank-you-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.thank-you-message {
+    font-size: 1.2rem;
+    color: #cccccc;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.whatsapp-section {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.whatsapp-section h3 {
+    color: #00ffff;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.whatsapp-section p {
+    color: #cccccc;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(45deg, #25d366, #128c7e);
+    color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+    color: #ffffff;
+}
+
+.whatsapp-btn i {
+    font-size: 1.3rem;
+}
+
+.whatsapp-note {
+    color: #888;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0;
 }
 
 /* Form animations */
