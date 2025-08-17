@@ -228,11 +228,65 @@ particleStyle.textContent = `
 `;
 document.head.appendChild(particleStyle);
 
+// Image Upload Functionality
+function initializeImageUpload() {
+    const fileInput = document.getElementById('profileImage');
+    const imagePreview = document.getElementById('imagePreview');
+    const removeBtn = document.getElementById('removeImage');
+    
+    if (fileInput && imagePreview && removeBtn) {
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    showNotification('Please select a valid image file.', 'error');
+                    return;
+                }
+                
+                // Validate file size (2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    showNotification('Image size should be less than 2MB.', 'error');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.innerHTML = `<img src="${e.target.result}" alt="Profile Preview">`;
+                    imagePreview.classList.add('has-image');
+                    removeBtn.style.display = 'inline-flex';
+                };
+                reader.readAsDataURL(file);
+                
+                showNotification('Profile image uploaded successfully!', 'success');
+            }
+        });
+        
+        removeBtn.addEventListener('click', function() {
+            fileInput.value = '';
+            imagePreview.innerHTML = `
+                <i class="fas fa-user-circle"></i>
+                <span>No image selected</span>
+            `;
+            imagePreview.classList.remove('has-image');
+            removeBtn.style.display = 'none';
+            showNotification('Profile image removed.', 'info');
+        });
+    }
+}
+
 // Form handling
 const joinForm = document.getElementById('joinForm');
 if (joinForm) {
     joinForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Validate image upload
+        const fileInput = document.getElementById('profileImage');
+        if (fileInput && fileInput.files.length === 0) {
+            showNotification('Please upload a profile image.', 'error');
+            return;
+        }
         
         // Show loading state
         const submitBtn = this.querySelector('.btn-primary');
@@ -247,6 +301,21 @@ if (joinForm) {
         setTimeout(() => {
             // Reset form
             this.reset();
+            
+            // Reset image preview
+            const imagePreview = document.getElementById('imagePreview');
+            if (imagePreview) {
+                imagePreview.innerHTML = `
+                    <i class="fas fa-user-circle"></i>
+                    <span>No image selected</span>
+                `;
+                imagePreview.classList.remove('has-image');
+            }
+            
+            const removeBtn = document.getElementById('removeImage');
+            if (removeBtn) {
+                removeBtn.style.display = 'none';
+            }
             
             // Show success message
             showNotification('Application submitted successfully! We\'ll get back to you soon.', 'success');
@@ -263,9 +332,29 @@ if (joinForm) {
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
+    
+    let icon, background;
+    switch(type) {
+        case 'success':
+            icon = 'fa-check-circle';
+            background = 'linear-gradient(45deg, #00ff88, #00cc6a)';
+            break;
+        case 'error':
+            icon = 'fa-exclamation-circle';
+            background = 'linear-gradient(45deg, #ff4444, #cc0000)';
+            break;
+        case 'info':
+            icon = 'fa-info-circle';
+            background = 'linear-gradient(45deg, #00ffff, #0088cc)';
+            break;
+        default:
+            icon = 'fa-info-circle';
+            background = 'linear-gradient(45deg, #00ffff, #ff00ff)';
+    }
+    
     notification.innerHTML = `
         <div class="notification-content">
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+            <i class="fas ${icon}"></i>
             <span>${message}</span>
         </div>
     `;
@@ -275,8 +364,8 @@ function showNotification(message, type = 'info') {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? 'linear-gradient(45deg, #00ff88, #00cc6a)' : 'linear-gradient(45deg, #00ffff, #ff00ff)'};
-        color: #000;
+        background: ${background};
+        color: ${type === 'success' ? '#000' : '#fff'};
         padding: 15px 20px;
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -354,9 +443,10 @@ function validateField(field) {
     return true;
 }
 
-// Initialize form validation
+// Initialize form validation and image upload
 document.addEventListener('DOMContentLoaded', function() {
     enhanceFormValidation();
+    initializeImageUpload();
 });
 
 // Form validation and enhancement

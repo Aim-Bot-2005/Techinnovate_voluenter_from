@@ -182,133 +182,148 @@
             <div class="join-content">
                 <div class="form-container">
                     <form class="join-form" id="joinForm">
-                        <div class="form-group">
-                            <label for="fullName">Full Name *</label>
-                            <input type="text" id="fullName" name="fullName" required>
-                        </div>
-                        
-                        <div class="form-row">
+                        <!-- Personal Information Section -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-user"></i>
+                                Personal Information
+                            </h3>
+                            
                             <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" required>
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
                             </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="branch">Branch *</label>
+                                    <select id="branch" name="branch" required>
+                                        <option value="">Select Branch</option>
+                                        <option value="CSE">Computer Science Engineering</option>
+                                        <option value="CSE-AIML">Computer Science Engineering (AI/ML)</option>
+                                        <option value="IT">Information Technology</option>
+                                        <option value="ECE">Electronics & Communication Engineering</option>
+                                        <option value="EEE">Electrical & Electronics Engineering</option>
+                                        <option value="ICE">Instrumentation & Control Engineering</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="year">Year of Study *</label>
+                                    <select id="year" name="year" required>
+                                        <option value="">Select Year</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Image Section -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-camera"></i>
+                                Profile Image
+                            </h3>
+                            
                             <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone">
+                                <label for="profileImage">Upload Your Profile Picture</label>
+                                <div class="image-upload-container">
+                                    <div class="image-preview" id="imagePreview">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>No image selected</span>
+                                    </div>
+                                    <div class="upload-controls">
+                                        <input type="file" id="profileImage" name="profileImage" accept="image/*" class="file-input">
+                                        <label for="profileImage" class="upload-btn">
+                                            <i class="fas fa-upload"></i>
+                                            Choose Image
+                                        </label>
+                                        <button type="button" class="remove-btn" id="removeImage" style="display: none;">
+                                            <i class="fas fa-trash"></i>
+                                            Remove
+                                        </button>
+                                    </div>
+                                    <p class="upload-hint">Recommended: Square image, max 2MB (JPG, PNG, GIF)</p>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="form-row">
+
+                        <!-- Team Selection Section -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-users"></i>
+                                Team Selection
+                            </h3>
+                            
                             <div class="form-group">
-                                <label for="rollNumber">Roll Number *</label>
-                                <input type="text" id="rollNumber" name="rollNumber" required>
+                                <label for="interests">Areas of Interest (Select only 2) *</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="interests" value="EM Team">
+                                        <span class="checkmark"></span>
+                                        EM Team
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="interests" value="Technical Team">
+                                        <span class="checkmark"></span>
+                                        Technical Team
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="interests" value="Design Team">
+                                        <span class="checkmark"></span>
+                                        Design Team
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="interests" value="Social Media and Event Coverage Team">
+                                        <span class="checkmark"></span>
+                                        Social Media and Event Coverage Team
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="interests" value="Sponsorship Team">
+                                        <span class="checkmark"></span>
+                                        Sponsorship Team
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="interests" value="Content and Documentation Team">
+                                        <span class="checkmark"></span>
+                                        Content and Documentation Team
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="interests" value="Video Editing Team">
+                                        <span class="checkmark"></span>
+                                        Video Editing Team
+                                    </label>
+                                </div>
                             </div>
+                        </div>
+
+                        <!-- Application Details Section -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-file-alt"></i>
+                                Application Details
+                            </h3>
+                            
                             <div class="form-group">
-                                <label for="branch">Branch *</label>
-                                <select id="branch" name="branch" required>
-                                    <option value="">Select Branch</option>
-                                    <option value="Computer Science">Computer Science</option>
-                                    <option value="Information Technology">Information Technology</option>
-                                    <option value="Electronics & Communication">Electronics & Communication</option>
-                                    <option value="Mechanical Engineering">Mechanical Engineering</option>
-                                    <option value="Electrical Engineering">Electrical Engineering</option>
-                                    <option value="Civil Engineering">Civil Engineering</option>
-                                </select>
+                                <label for="experience">Why should you be selected for that position? *</label>
+                                <textarea id="experience" name="experience" rows="3" required placeholder="Explain your qualifications, skills, and why you're the best fit for this role..."></textarea>
                             </div>
-                        </div>
-                        
-                        <div class="form-row">
+                            
                             <div class="form-group">
-                                <label for="year">Year of Study *</label>
-                                <select id="year" name="year" required>
-                                    <option value="">Select Year</option>
-                                    <option value="1st Year">1st Year</option>
-                                    <option value="2nd Year">2nd Year</option>
-                                    <option value="3rd Year">3rd Year</option>
-                                    <option value="4th Year">4th Year</option>
-                                </select>
+                                <label for="motivation">Do you have any prior experience in this department? *</label>
+                                <textarea id="motivation" name="motivation" rows="4" required placeholder="Describe any relevant experience, projects, or skills that make you suitable..."></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="semester">Semester</label>
-                                <select id="semester" name="semester">
-                                    <option value="">Select Semester</option>
-                                    <option value="1">1st Semester</option>
-                                    <option value="2">2nd Semester</option>
-                                    <option value="3">3rd Semester</option>
-                                    <option value="4">4th Semester</option>
-                                    <option value="5">5th Semester</option>
-                                    <option value="6">6th Semester</option>
-                                    <option value="7">7th Semester</option>
-                                    <option value="8">8th Semester</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="interests">Areas of Interest (Select all that apply)</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="Robotics">
-                                    <span class="checkmark"></span>
-                                    Robotics
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="AI/ML">
-                                    <span class="checkmark"></span>
-                                    AI/ML
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="IoT">
-                                    <span class="checkmark"></span>
-                                    IoT
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="Web Development">
-                                    <span class="checkmark"></span>
-                                    Web Development
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="Mobile Development">
-                                    <span class="checkmark"></span>
-                                    Mobile Development
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="Cybersecurity">
-                                    <span class="checkmark"></span>
-                                    Cybersecurity
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="Data Science">
-                                    <span class="checkmark"></span>
-                                    Data Science
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="interests" value="Hardware">
-                                    <span class="checkmark"></span>
-                                    Hardware
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="experience">Previous Experience (if any)</label>
-                            <textarea id="experience" name="experience" rows="3" placeholder="Describe any relevant projects, internships, or technical experience..."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="motivation">Why do you want to join TECHINNOVATE? *</label>
-                            <textarea id="motivation" name="motivation" rows="4" required placeholder="Tell us about your motivation and what you hope to achieve..."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="availability">Availability for Society Activities</label>
-                            <select id="availability" name="availability">
-                                <option value="">Select Availability</option>
-                                <option value="Weekdays">Weekdays</option>
-                                <option value="Weekends">Weekends</option>
-                                <option value="Both">Both Weekdays & Weekends</option>
-                                <option value="Flexible">Flexible</option>
-                            </select>
                         </div>
                         
                         <div class="form-actions">
