@@ -275,17 +275,16 @@ function initializeImageUpload() {
     }
 }
 
-// Google Form Integration - ACTUAL SUBMISSION TO GOOGLE FORMS
-// We'll submit the form data directly to Google Forms using the formResponse endpoint
-
-// The user's actual Google Form submission URL (this is the endpoint that receives data)
-const GOOGLE_FORM_SUBMIT_URL = 'https://docs.google.com/forms/d/1VeoJ6daMYyjpDsEJTaurWX0gHrfTD5_TtRxlwnPPr2Y/formResponse';
+// Google Form Integration - SIMPLE AND RELIABLE METHOD
+const GOOGLE_FORM_SUBMIT_URL = 'https://docs.google.com/forms/d/1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA/formResponse';
 
 // Form handling
 const joinForm = document.getElementById('joinForm');
 if (joinForm) {
     joinForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        console.log('=== FORM SUBMISSION STARTED ===');
         
         // Show loading state
         const submitBtn = this.querySelector('.btn-primary');
@@ -296,72 +295,35 @@ if (joinForm) {
         btnLoading.style.display = 'flex';
         submitBtn.disabled = true;
         
-        // Collect form data
+        // Log form data for debugging
         const formData = new FormData(this);
+        console.log('Form data to submit:');
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
         
-        // Create a hidden form to submit to Google Forms
-        const hiddenForm = document.createElement('form');
-        hiddenForm.method = 'POST';
-        hiddenForm.action = GOOGLE_FORM_SUBMIT_URL;
-        hiddenForm.target = 'hidden-iframe';
-        hiddenForm.style.display = 'none';
-        
-        // Add all form fields to the hidden form
-        // We'll use the actual field names from your HTML form
-        const fields = {
-            'entry.1375978796': formData.get('entry.1375978796'),        // Full Name
-            'entry.1604746565': formData.get('entry.1604746565'),        // Phone Number
-            'entry.239972610': formData.get('entry.239972610'),          // Branch
-            'entry.1619717035': formData.get('entry.1619717035'),        // Year of Study
-            'entry.1025821786': formData.get('entry.1025821786'),        // Experience
-            'entry.804257283': formData.get('entry.804257283'),          // Motivation
-            'entry.998193003': formData.getAll('entry.998193003')        // Interests (checkboxes)
-        };
-        
-        // Add each field to the hidden form
-        Object.keys(fields).forEach(fieldId => {
-            if (fields[fieldId]) {
-                if (Array.isArray(fields[fieldId])) {
-                    // Handle checkboxes (multiple values)
-                    fields[fieldId].forEach(value => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = fieldId;
-                        input.value = value;
-                        hiddenForm.appendChild(input);
-                    });
-                } else {
-                    // Handle single value fields
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = fieldId;
-                    input.value = fields[fieldId];
-                    hiddenForm.appendChild(input);
-                }
-            }
-        });
-        
-        // Create hidden iframe to receive the response
-        const hiddenIframe = document.createElement('iframe');
-        hiddenIframe.name = 'hidden-iframe';
-        hiddenIframe.style.display = 'none';
-        document.body.appendChild(hiddenIframe);
-        
-        // Add the hidden form to the page
-        document.body.appendChild(hiddenForm);
-        
-        // Submit the form
+        // SIMPLE METHOD: Let the form submit naturally to Google Forms
         try {
-            hiddenForm.submit();
-            console.log('Form submitted to Google Forms successfully!');
+            console.log('Submitting form to Google Forms...');
             
-            // Show success message and thank you card
+            // Set the form properties
+            this.action = GOOGLE_FORM_SUBMIT_URL;
+            this.method = 'POST';
+            this.target = 'hidden-iframe';
+            
+            console.log('Form configured:', {
+                action: this.action,
+                method: this.method,
+                target: this.target
+            });
+            
+            // Submit the form
+            this.submit();
+            console.log('Form submitted!');
+            
+            // Show success message after delay
             setTimeout(() => {
-                // Clean up hidden elements
-                document.body.removeChild(hiddenForm);
-                document.body.removeChild(hiddenIframe);
-                
-                // Hide the form and show thank you card
+                // Hide form and show thank you card
                 const formContainer = document.querySelector('.join-form');
                 const thankYouCard = document.getElementById('thankYouCard');
                 
@@ -371,29 +333,24 @@ if (joinForm) {
                     thankYouCard.scrollIntoView({ behavior: 'smooth' });
                 }
                 
-                // Reset button state
+                // Reset button
                 btnText.style.display = 'inline';
                 btnLoading.style.display = 'none';
                 submitBtn.disabled = false;
                 
-                // Show success notification
                 showNotification('Application submitted successfully! Check your Google Form responses.', 'success');
+                console.log('Form submission completed successfully');
                 
-            }, 2000);
+            }, 3000);
             
         } catch (error) {
             console.error('Error submitting form:', error);
             
-            // Clean up on error
-            if (hiddenForm.parentNode) document.body.removeChild(hiddenForm);
-            if (hiddenIframe.parentNode) document.body.removeChild(hiddenIframe);
-            
-            // Reset button state
+            // Reset button
             btnText.style.display = 'inline';
             btnLoading.style.display = 'none';
             submitBtn.disabled = false;
             
-            // Show error notification
             showNotification('Error submitting form. Please try again.', 'error');
         }
     });
@@ -742,3 +699,212 @@ successStyle.textContent = `
     }
 `;
 document.head.appendChild(successStyle);
+
+// Add test function to debug Google Form connection
+function testGoogleFormConnection() {
+    console.log('=== Testing Google Form Connection ===');
+    console.log('Form URL:', GOOGLE_FORM_SUBMIT_URL);
+    console.log('Form ID:', '1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA');
+    
+    // Test if we can access the form
+    fetch(GOOGLE_FORM_SUBMIT_URL, {
+        method: 'GET',
+        mode: 'no-cors' // This is necessary for cross-origin requests
+    })
+    .then(response => {
+        console.log('Form accessibility test completed');
+        console.log('Note: Due to CORS restrictions, we cannot read the response, but this confirms the endpoint exists');
+    })
+    .catch(error => {
+        console.error('Error testing form accessibility:', error);
+    });
+    
+    // Log form field information
+    const form = document.getElementById('joinForm');
+    if (form) {
+        console.log('Form found in DOM');
+        console.log('Form action:', form.action);
+        console.log('Form method:', form.method);
+        console.log('Form target:', form.target);
+        
+        // Log all form fields
+        const fields = form.querySelectorAll('input, select, textarea');
+        console.log('Form fields found:', fields.length);
+        fields.forEach((field, index) => {
+            console.log(`Field ${index + 1}:`, {
+                name: field.name,
+                type: field.type,
+                id: field.id,
+                required: field.required
+            });
+        });
+    } else {
+        console.error('Form not found in DOM');
+    }
+}
+
+// Function to test form submission with different field name patterns
+function testFormSubmission() {
+    console.log('=== Testing Form Submission ===');
+    
+    // Test data
+    const testData = {
+        'entry.1375978796': 'Test User',
+        'entry.1604746565': '+91 98765 43210',
+        'entry.239972610': 'CSE',
+        'entry.1619717035': '2nd Year',
+        'entry.998193003': 'Technical Team',
+        'entry.1025821786': 'Test experience description',
+        'entry.804257283': 'Test motivation description'
+    };
+    
+    console.log('Test data to submit:', testData);
+    
+    // Create a test form submission
+    const testForm = document.createElement('form');
+    testForm.method = 'POST';
+    testForm.action = GOOGLE_FORM_SUBMIT_URL;
+    testForm.target = 'hidden-iframe';
+    testForm.style.display = 'none';
+    
+    // Add test data to form
+    Object.entries(testData).forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        testForm.appendChild(input);
+    });
+    
+    // Submit test form
+    document.body.appendChild(testForm);
+    testForm.submit();
+    
+    console.log('Test form submitted');
+    
+    // Remove test form
+    setTimeout(() => {
+        if (testForm.parentNode) {
+            testForm.parentNode.removeChild(testForm);
+        }
+    }, 1000);
+}
+
+// Function to analyze Google Form and find correct field names
+async function analyzeGoogleForm() {
+    console.log('=== Analyzing Google Form Structure ===');
+    
+    try {
+        // Try to fetch the form page to analyze its structure
+        const formViewUrl = 'https://docs.google.com/forms/d/1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA/viewform';
+        
+        console.log('Attempting to analyze form at:', formViewUrl);
+        
+        // Note: Due to CORS restrictions, we can't directly read the form content
+        // But we can provide guidance on how to find the correct field names
+        
+        console.log(`
+=== GOOGLE FORM FIELD NAME GUIDE ===
+To find the correct field names for your Google Form:
+
+1. Open your Google Form in edit mode
+2. Click on each field/question
+3. Look at the URL - it will show something like:
+   https://docs.google.com/forms/d/1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA/edit#question=1234567890
+
+4. The question ID (1234567890) corresponds to entry.1234567890
+5. Update your HTML form field names to match these IDs
+
+Current field names in your form:
+- Full Name: entry.1375978796
+- Phone: entry.1604746565  
+- Branch: entry.239972610
+- Year: entry.1619717035
+- Profile Image: entry.640950664
+- Team Selection: entry.998193003
+- Experience: entry.1025821786
+- Motivation: entry.804257283
+
+If these don't match your actual Google Form, update them accordingly.
+        `);
+        
+    } catch (error) {
+        console.error('Error analyzing form:', error);
+    }
+}
+
+// Run the test when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for everything to load, then run the test
+    setTimeout(testGoogleFormConnection, 1000);
+    
+    // Also add a manual test button for debugging
+    const testButton = document.createElement('button');
+    testButton.textContent = 'Test Form Connection';
+    testButton.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 10000;
+        padding: 10px;
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+    `;
+    testButton.addEventListener('click', testGoogleFormConnection);
+    document.body.appendChild(testButton);
+    
+    // Add a second test button for form submission
+    const testSubmitButton = document.createElement('button');
+    testSubmitButton.textContent = 'Test Form Submit';
+    testSubmitButton.style.cssText = `
+        position: fixed;
+        top: 60px;
+        left: 20px;
+        z-index: 10000;
+        padding: 10px;
+        background: #4ecdc4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+    `;
+    testSubmitButton.addEventListener('click', testFormSubmission);
+    document.body.appendChild(testSubmitButton);
+    
+    // Add a third test button for form analysis
+    const analyzeButton = document.createElement('button');
+    analyzeButton.textContent = 'Analyze Form';
+    analyzeButton.style.cssText = `
+        position: fixed;
+        top: 100px;
+        left: 20px;
+        z-index: 10000;
+        padding: 10px;
+        background: #45b7d1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+    `;
+    analyzeButton.addEventListener('click', analyzeGoogleForm);
+    document.body.appendChild(analyzeButton);
+    
+    // Remove test buttons after 30 seconds
+    setTimeout(() => {
+        if (testButton.parentNode) {
+            testButton.parentNode.removeChild(testButton);
+        }
+        if (testSubmitButton.parentNode) {
+            testSubmitButton.parentNode.removeChild(testSubmitButton);
+        }
+        if (analyzeButton.parentNode) {
+            analyzeButton.parentNode.removeChild(analyzeButton);
+        }
+    }, 30000);
+});

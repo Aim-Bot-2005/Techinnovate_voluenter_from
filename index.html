@@ -181,7 +181,8 @@
             </div>
             <div class="join-content">
                 <div class="form-container">
-                    <form class="join-form" id="joinForm">
+                    <!-- Google Form connected - Form ID: 1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA -->
+                    <form class="join-form" id="joinForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA/viewform?usp=dialog" method="POST" target="hidden-iframe">
                         <!-- Personal Information Section -->
                         <div class="form-section">
                             <h3 class="form-section-title">
@@ -191,7 +192,7 @@
                             
                             <div class="form-group">
                                 <label for="fullName">Full Name *</label>
-                                <input type="text" id="fullName" name="entry.1375978796" required placeholder="Enter your full name">
+                                <input type="text" id="fullName" name="entry.1619717035" required placeholder="Enter your full name">
                             </div>
                             
                             <div class="form-row">
@@ -379,6 +380,9 @@
         </div>
     </footer>
 
+    <!-- Hidden iframe for Google Form submission -->
+    <iframe name="hidden-iframe" style="display: none;" onload="console.log('Hidden iframe loaded - form submission response received')"></iframe>
+    
     <script src="script.js"></script>
 </body>
 </html>
