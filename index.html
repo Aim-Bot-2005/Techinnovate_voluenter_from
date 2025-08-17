@@ -182,7 +182,7 @@
             <div class="join-content">
                 <div class="form-container">
                     <!-- Google Form connected - Form ID: 1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA -->
-                    <form class="join-form" id="joinForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdzpB3pIaHRaH12GnVnfLxkRcOsMYUVzRrbnzgjshUUdFCISA/viewform?usp=dialog" method="POST" target="hidden-iframe">
+                    <form class="join-form" id="joinForm">
                         <!-- Personal Information Section -->
                         <div class="form-section">
                             <h3 class="form-section-title">
@@ -191,72 +191,36 @@
                             </h3>
                             
                             <div class="form-group">
-                                <label for="fullName">Full Name *</label>
-                                <input type="text" id="fullName" name="entry.1619717035" required placeholder="Enter your full name">
+                                <label for="fullName">FULL Name *</label>
+                                <input type="text" id="fullName" name="entry.1375978796" required placeholder="Enter your full name">
                             </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="phone">Phone Number *</label>
-                                    <input type="tel" id="phone" name="entry.1604746565" required placeholder="+91 98765 43210">
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="branch">Branch *</label>
-                                    <select id="branch" name="entry.239972610" required>
-                                        <option value="">Select Branch</option>
-                                        <option value="CSE">Computer Science Engineering</option>
-                                        <option value="CSE-AIML">Computer Science Engineering (AI/ML)</option>
-                                        <option value="IT">Information Technology</option>
-                                        <option value="ECE">Electronics & Communication Engineering</option>
-                                        <option value="EEE">Electrical & Electronics Engineering</option>
-                                        <option value="ICE">Instrumentation & Control Engineering</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="year">Year of Study *</label>
-                                    <select id="year" name="entry.1619717035" required>
-                                        <option value="">Select Year</option>
-                                        <option value="1st Year">1st Year</option>
-                                        <option value="2nd Year">2nd Year</option>
-                                        <option value="3rd Year">3rd Year</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Profile Image Section -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                <i class="fas fa-camera"></i>
-                                Profile Image
-                            </h3>
                             
                             <div class="form-group">
-                                <label for="profileImage">Upload Your Profile Picture</label>
-                                <div class="image-upload-container">
-                                    <div class="image-preview" id="imagePreview">
-                                        <i class="fas fa-user-circle"></i>
-                                        <span>No image selected</span>
-                                    </div>
-                                    <div class="upload-controls">
-                                        <input type="file" id="profileImage" name="entry.640950664" accept="image/*" class="file-input">
-                                        <label for="profileImage" class="upload-btn">
-                                            <i class="fas fa-upload"></i>
-                                            Choose Image
-                                        </label>
-                                        <button type="button" class="remove-btn" id="removeImage" style="display: none;">
-                                            <i class="fas fa-trash"></i>
-                                            Remove
-                                        </button>
-                                    </div>
-                                    <p class="upload-hint">Recommended: Square image, max 2MB (JPG, PNG, GIF)</p>
-                                </div>
+                                <label for="branch">BRANCH *</label>
+                                <select id="branch" name="entry.239972610" required>
+                                    <option value="">Select Branch</option>
+                                    <option value="Computer Science Engineering">Computer Science Engineering</option>
+                                    <option value="Computer Science Engineering (AI/ML)">Computer Science Engineering (AI/ML)</option>
+                                    <option value="Information Technology">Information Technology</option>
+                                    <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
+                                    <option value="Electrical & Electronics Engineering">Electrical & Electronics Engineering</option>
+                                    <option value="Instrumentation & Control Engineering">Instrumentation & Control Engineering</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="year">YEAR *</label>
+                                <select id="year" name="entry.1619717035" required>
+                                    <option value="">Select Year</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="entry.1604746565" required placeholder="+91 98765 43210">
                             </div>
                         </div>
 
@@ -268,7 +232,7 @@
                             </h3>
                             
                             <div class="form-group">
-                                <label for="interests">Areas of Interest (Select only 2) *</label>
+                                <label for="interests">Preferred options (provide 2 preferences) *</label>
                                 <div class="checkbox-group">
                                     <label class="checkbox-item">
                                         <input type="checkbox" name="entry.998193003" value="EM Team">
@@ -286,9 +250,9 @@
                                         Design Team
                                     </label>
                                     <label class="checkbox-item">
-                                        <input type="checkbox" name="entry.998193003" value="Social Media and Event Coverage Team">
+                                        <input type="checkbox" name="entry.998193003" value="Social Media & Event Coverage Team">
                                         <span class="checkmark"></span>
-                                        Social Media and Event Coverage Team
+                                        Social Media & Event Coverage Team
                                     </label>
                                     <label class="checkbox-item">
                                         <input type="checkbox" name="entry.998193003" value="Sponsorship Team">
@@ -317,13 +281,18 @@
                             </h3>
                             
                             <div class="form-group">
-                                <label for="experience">Why should you be selected for that position? *</label>
-                                <textarea id="experience" name="entry.1025821786" rows="3" required placeholder="Explain your qualifications, skills, and why you're the best fix for this role..."></textarea>
+                                <label for="motivation">Why should you be selected for that position? *</label>
+                                <textarea id="motivation" name="entry.804257283" rows="3" required placeholder="Explain your qualifications, skills, and why you're the best fit for this role..."></textarea>
                             </div>
                             
                             <div class="form-group">
-                                <label for="motivation">Do you have any prior experience in this department? *</label>
-                                <textarea id="motivation" name="entry.804257283" rows="4" required placeholder="Describe any relevant experience, projects, or skills that make you suitable..."></textarea>
+                                <label for="experience">Do you have any prior experience in this department? *</label>
+                                <textarea id="experience" name="entry.1025821786" rows="4" required placeholder="Describe any relevant experience, projects, or skills that make you suitable..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="photoLink">Google drive link of your photo *</label>
+                                <input type="url" id="photoLink" name="entry.1310789224" required placeholder="https://drive.google.com/file/d/...">
                             </div>
                         </div>
                         
@@ -380,9 +349,10 @@
         </div>
     </footer>
 
-    <!-- Hidden iframe for Google Form submission -->
-    <iframe name="hidden-iframe" style="display: none;" onload="console.log('Hidden iframe loaded - form submission response received')"></iframe>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
     
+    <!-- Custom JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
